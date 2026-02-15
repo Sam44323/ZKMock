@@ -4,6 +4,7 @@ use crate::hash_functions::HashFunction;
 use crate::r1cs::{Operation, R1CS, Variable};
 
 /**
+ * @note
  * zk-proof operations happens through the usage of gates
  */
 pub enum Gate{
