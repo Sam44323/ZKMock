@@ -48,6 +48,7 @@ impl Circuit {
     if let Some(ref hash_function) = self.hash_function {
       hash_function.hash(a, b)
     } else {
+      // the error handling
       panic!("Hash function not defined for this circuit");
     }
   }
