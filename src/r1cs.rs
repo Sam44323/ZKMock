@@ -24,16 +24,12 @@ pub enum Operation{
 /**
  * Example
  * 
- * let x = Variable { index: 0, value: BigInt::from(5) };
- * let y = Variable { index: 1, value: BigInt::from(7) };
- * let z = Variable { index: 2, value: BigInt::from(12) };
+ * For the operation of x + y = z,
  * 
- * let constraint = Constraint {
- * left: vec![(x.clone(), x.value.clone())],
- * right: vec![(y.clone(), y.value.clone())],
- * output: vec![(z.clone(), z.value.clone())],
- * operation: Operation::Add,
- * };
+ * -> left is x
+ * -> right is y
+ * -> operation is '+'
+ * -> output is z
  */
 
 #[derive(Serialize, Deserialize)]
