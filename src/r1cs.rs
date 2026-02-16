@@ -47,6 +47,7 @@ pub struct R1CS{
 }
 
 impl R1CS {
+  /// Creates a new, empty R1CS instance.
   pub fn new() -> Self {
     R1CS{
       variables: Vec::new(),
@@ -54,6 +55,7 @@ impl R1CS {
     }
   }
 
+  /// Adds a constraint to the R1CS with the given left, right, output, and operation.
   pub fn add_constraints(&mut self, left: Vec<(Variable, BigInt)>, right: Vec<(Variable, BigInt)>, output: Vec<(Variable, BigInt)>, operation: Operation) {
     let constraint = Constraint{
       left,
@@ -64,6 +66,9 @@ impl R1CS {
     self.constraints.push(constraint);
   }
 
+  /// Checks if all constraints are satisfied by the current variable assignments.
+  /// Returns true if all constraints hold, false otherwise.
+  /// The apply_hash closure is used for Hash operations.
   pub fn is_satisfied<F>(&self, apply_hash: F) -> bool
   where F: Fn(&BigInt, &BigInt) -> BigInt // a closure that applies the hash
   {
@@ -98,6 +103,7 @@ impl R1CS {
     true
   }
 
+  /// Serializes and saves the entire R1CS structure to a binary file.
   pub fn save_to_binary(&self, filename: &str){
     let mut file = File::create(filename).expect("Unable to create the file");
     let data = bincode::serialize(self).expect("Here failed to serialize R1CS");
