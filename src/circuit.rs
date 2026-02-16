@@ -43,4 +43,12 @@ impl Circuit {
   pub fn add_output(&mut self, output: BigInt) {
     self.outputs.push(output);
   }
+
+  pub fn apply_hash(&self, a: &BigInt, b: &BigInt) -> BigInt {
+    if let Some(ref hash_function) = self.hash_function {
+      hash_function.hash(a, b)
+    } else {
+      panic!("Hash function not defined for this circuit");
+    }
+  }
 }
