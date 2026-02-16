@@ -57,4 +57,57 @@ impl Circuit {
       panic!("Hash function not defined for this circuit");
     }
   }
+
+  /**
+   * Converts the circuit's gates and inputs into R1CS constraints and prepares for proof generation.
+   *
+   * Steps:
+   * 1. Initializes a new R1CS instance.
+   * 2. Converts all circuit inputs into R1CS variables with unique indices.
+   * 3. Iterates over each gate in the circuit and translates it into an R1CS constraint:
+   *    - Add gate: Enforces input[a] + input[b] = input[output].
+   *    - Mul gate: Enforces input[a] * input[b] = input[output].
+   *    - Hash gate: Computes hash(input[a], input[b]) and enforces it equals output.
+   * 4. Each constraint is added to the R1CS system for later proof generation or verification.
+   *
+   * Arguments:
+   * - proof_file: Path to the file where the proof (or R1CS data) will be stored (not implemented in this snippet).
+   */
+  pub fn generate_proof(&self, proof_file: &str) {
+    let mut r1cs = R1CS::new();
+    r1cs.variables = self.inputs.iter().enumerate().map(|(i, input)| Variable { index: i, value: input.clone() }).collect();
+
+    for gate in &self.gates {
+      match gate {
+        // For an Add gate, create a constraint enforcing input[a] + input[b] = input[output]
+        Gate::Add(a, b, output) => {
+          r1cs.add_constraints(
+            vec![(Variable { index: *a, value: self.inputs[*a].clone() }, BigInt::from(1))],
+            vec![(Variable { index: *b, value: self.inputs[*b].clone() }, BigInt::from(1))],
+            vec![(Variable { index: *output, value: self.inputs[*output].clone() }, BigInt::from(1))],
+            Operation::Add
+          );
+        }
+        // For a Mul gate, create a constraint enforcing input[a] * input[b] = input[output]
+        Gate::Mul(a, b, output) => {
+          r1cs.add_constraints(
+            vec![(Variable { index: *a, value: self.inputs[*a].clone() }, BigInt::from(1))],
+            vec![(Variable { index: *b, value: self.inputs[*b].clone() }, BigInt::from(1))],
+            vec![(Variable { index: *output, value: self.inputs[*output].clone() }, BigInt::from(1))],
+            Operation::Mul
+          );
+        }
+        // For a Hash gate, compute hash(input[a], input[b]) and enforce it equals output
+        Gate::Hash(a, b, output) => {
+          let hash_result = self.apply_hash(&self.inputs[*a], &self.inputs[*b]);
+          r1cs.add_constraints(
+            vec![(Variable { index: *a, value: self.inputs[*a].clone() }, BigInt::from(1))],
+            vec![(Variable { index: *b, value: self.inputs[*b].clone() }, BigInt::from(1))],
+            vec![(Variable { index: *output, value: hash_result.clone() }, BigInt::from(1))],
+            Operation::Hash
+          );
+        }
+      }
+    }
+  }
 }
