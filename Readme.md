@@ -39,4 +39,10 @@ The goal of this repository is conceptual clarity, not cryptographic security or
 
 > Note: This repository must not be used for real cryptographic-applications.
 
+### Files
+
+`circuit.rs` - The high-level logic for the zkp for defining the circuit which then would be used to convert to r1cs constraint system.
+
+`r1cs.rs` - The logic for converting the circuit to r1cs constraint system, which is a common representation for zkps.
+
 ---
