@@ -141,9 +141,9 @@ impl Circuit {
   }
 
   pub fn verify_proof(&self, proof_file: &str) -> bool {
-    let proof_data = std::fs::read(proof_file).expect("Unable to read proof file");
+    let proof_data = std::fs::read(proof_file).expect("Unable to read proof-file");
     if proof_data.len() != 1 {
-      panic!("Invalid proof data format");
+      panic!("Invalid-proof data format");
     }
     proof_data[0] == 1 // returns true if the proof is valid (1), false otherwise (0)
   }
