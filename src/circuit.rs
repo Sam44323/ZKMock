@@ -59,11 +59,11 @@ impl Circuit {
   }
 
   /**
-   * Converts the circuit's gates and inputs into R1CS constraints and prepares for proof generation.
+   * Converts the circuit's gates and inputs into R1CS constraints and prepares for proof-generation.
    *
    * Steps:
    * 1. Initializes a new R1CS instance.
-   * 2. Converts all circuit inputs into R1CS variables with unique indices.
+   * 2. Converts all circuit inputs into R1CS variables with unique-indices.
    * 3. Iterates over each gate in the circuit and translates it into an R1CS constraint:
    *    - Add gate: Enforces input[a] + input[b] = input[output].
    *    - Mul gate: Enforces input[a] * input[b] = input[output].
@@ -72,6 +72,8 @@ impl Circuit {
    *
    * Arguments:
    * - proof_file: Path to the file where the proof (or R1CS data) will be stored (not implemented in this snippet).
+   * 
+   * order of the gates in self.gates is synonymous to the opcodes system in EVM and thus it mimics how the entire program was written in DSL(let's say circom) during the compilation-phase
    */
   pub fn generate_proof(&self, proof_file: &str) {
     let mut r1cs = R1CS::new();
