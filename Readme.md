@@ -45,6 +45,10 @@ The goal of this repository is conceptual clarity, not cryptographic security or
 
 `r1cs.rs` - The logic for converting the circuit to r1cs constraint system, which is a common representation for zkps.
 
+`hash_function.rs` - A simple hash function implementation to be used in the circuit, not cryptographically secure.
+
+`merkle.rs` - A simple Merkle tree implementation to demonstrate how Merkle proofs can be used in zkps.
+
 shoutout to @luisshr for this: https://github.com/luishsr/zk-mini
 
 ---
