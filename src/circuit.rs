@@ -139,4 +139,12 @@ impl Circuit {
     file.write_all(&[is_valid as u8]).expect("Unable to write proof data"); // writing whether the proof is valid as a single byte (1 for valid, 0 for invalid one)
     println!("Proof-generation completed. Proof is valid: {}", is_valid);
   }
+
+  pub fn verify_proof(&self, proof_file: &str) -> bool {
+    let proof_data = std::fs::read(proof_file).expect("Unable to read proof file");
+    if proof_data.len() != 1 {
+      panic!("Invalid proof data format");
+    }
+    proof_data[0] == 1 // returns true if the proof is valid (1), false otherwise (0)
+  }
 }
