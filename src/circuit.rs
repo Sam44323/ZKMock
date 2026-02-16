@@ -36,6 +36,11 @@ impl Circuit {
     index
   }
 
+  pub fn get_input(&self, index: usize) -> Option<&BigInt> {
+    self.inputs.get(index)
+  }
+  
+
   pub fn add_gate(&mut self, gate: Gate) {
     self.gates.push(gate);
   }
