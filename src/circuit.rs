@@ -21,6 +21,8 @@ pub struct Circuit{
 }
 
 impl Circuit {
+  /// Creates a new Circuit with an optional hash function.
+  /// Initializes empty inputs, gates, and outputs.
   pub fn new(hash_function: Option<Box<dyn HashFunction>>) -> Self {
     Circuit{
       hash_function,
@@ -30,25 +32,31 @@ impl Circuit {
     }
   }
 
+  /// Adds an input value to the circuit and returns its index.
   pub fn add_input(&mut self, input: BigInt) -> usize {
     let index = self.inputs.len();
     self.inputs.push(input);
     index
   }
 
+  /// Retrieves a reference to the input value at the given index, if it exists.
   pub fn get_input(&self, index: usize) -> Option<&BigInt> {
     self.inputs.get(index)
   }
   
 
+  /// Adds a gate (operation) to the circuit.
   pub fn add_gate(&mut self, gate: Gate) {
     self.gates.push(gate);
   }
 
+  /// Adds an output value to the circuit.
   pub fn add_output(&mut self, output: BigInt) {
     self.outputs.push(output);
   }
 
+  /// Applies the circuit's hash function to two BigInt values.
+  /// Panics if no hash function is defined.
   pub fn apply_hash(&self, a: &BigInt, b: &BigInt) -> BigInt {
     if let Some(ref hash_function) = self.hash_function {
       hash_function.hash(a, b)
