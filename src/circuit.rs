@@ -126,6 +126,6 @@ impl Circuit {
 
     let mut file = std::fs::File::create(proof_file).expect("Unable to create proof file");
     file.write_all(&[is_valid as u8]).expect("Unable to write proof data"); // writing whether the proof is valid as a single byte (1 for valid, 0 for invalid one)
-    println!("Proof generation completed. Proof is valid: {}", is_valid);
+    println!("Proof-generation completed. Proof is valid: {}", is_valid);
   }
 }
