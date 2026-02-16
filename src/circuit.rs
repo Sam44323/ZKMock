@@ -89,6 +89,7 @@ impl Circuit {
     let mut r1cs = R1CS::new();
     r1cs.variables = self.inputs.iter().enumerate().map(|(i, input)| Variable { index: i, value: input.clone() }).collect();
 
+    // Creating the R1CS constraints based on the gates defined in the circuit
     for gate in &self.gates {
       match gate {
         // For an Add gate, create a constraint enforcing input[a] + input[b] = input[output]
@@ -123,6 +124,8 @@ impl Circuit {
         }
       }
     }
+
+    // We are checking whether the witness would be satisfying the constraint that has been defined in the circuits defined in R1CS
 
     let is_valid = r1cs.is_satisfied(|a, b| {
       if let Some(ref hash_function) = self.hash_function {
