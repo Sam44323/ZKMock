@@ -115,5 +115,13 @@ impl Circuit {
         }
       }
     }
+
+    let is_valid = r1cs.is_satisfied(|a, b| {
+      if let Some(ref hash_function) = self.hash_function {
+        hash_function.hash(a, b) // the return value would be in terms of BigInt
+      } else {
+        panic!("Hash function not defined for this circuit");
+      }
+    });
   }
 }
