@@ -125,7 +125,7 @@ impl Circuit {
       }
     }
 
-    // We are checking whether the witness would be satisfying the constraint that has been defined in the circuits defined in R1CS
+    // Checking for whether the witness would be satisfying the constraint that has been defined in the circuits defined in R1CS
 
     let is_valid = r1cs.is_satisfied(|a, b| {
       if let Some(ref hash_function) = self.hash_function {
