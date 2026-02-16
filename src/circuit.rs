@@ -108,6 +108,8 @@ impl Circuit {
             vec![(Variable { index: *output, value: hash_result.clone() }, BigInt::from(1))],
             Operation::Hash
           );
+
+          println!("Hash-gate applied: hash({:?}, {:?}) = {:?}", self.inputs[*a], self.inputs[*b], hash_result);
         }
       }
     }
