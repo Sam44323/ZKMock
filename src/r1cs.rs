@@ -63,5 +63,39 @@ impl R1CS {
     };
     self.constraints.push(constraint);
   }
+
+  pub fn is_satisfied<F>(&self, apply_hash: F) -> bool
+  where F: Fn(&BigInt, &BigInt) -> BigInt // a closure that applies the hash
+  {
+    for constraint in &self.constraints {
+      let left_value: BigInt = constraint.left.iter().map(|(var, coeff)| &var.value * coeff).sum();
+      let right_value: BigInt = constraint.right.iter().map(|(var, coeff)| &var.value * coeff).sum();
+      let output_value: BigInt = constraint.output.iter().map(|(var, coeff)| &var.value * coeff).sum();
+
+      match constraint.operation {
+        Operation::Add => {
+          if left_value.clone() + right_value.clone() != output_value.clone() {
+            print!("Add constraint not satisfied: {:?} + {:?} != {:?}", left_value, right_value, output_value);
+            return false;
+          }
+        },
+        Operation::Mul => {
+          if left_value.clone() * right_value.clone() != output_value.clone() {
+            print!("Mul constraint not satisfied: {:?} * {:?} != {:?}", left_value, right_value, output_value);
+            return false;
+          }
+        },
+        Operation::Hash => {
+          // For a hash operation, we expect the output to be the result of applying the hash function
+          let expected_output = apply_hash(&left_value, &right_value);
+          if expected_output != output_value {
+            print!("Hash constraint not satisfied: expected {:?}, got {:?}", expected_output, output_value);
+            return false;
+          }
+        }
+      }
+    }
+    true
+  }
 }
 

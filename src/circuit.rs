@@ -74,6 +74,8 @@ impl Circuit {
    * - proof_file: Path to the file where the proof (or R1CS data) will be stored (not implemented in this snippet).
    * 
    * order of the gates in self.gates is synonymous to the opcodes system in EVM and thus it mimics how the entire program was written in DSL(let's say circom) during the compilation-phase
+   * 
+   * @todo >1-degree polyomials handling doesn't function yet for this method as it doesn't handle the intermediate variables for the operations as of yet
    */
   pub fn generate_proof(&self, proof_file: &str) {
     let mut r1cs = R1CS::new();
