@@ -3,9 +3,8 @@ mod r1cs;
 mod hash_functions;
 mod merkle;
 
-use num_bigint::{BigInt, ToBigInt};
+use num_bigint::{ToBigInt};
 use circuit::Circuit;
-use hash_functions::{SimpleAddHash, CustomHash};
 
 /// A simple addition proof using the Circuit and a basic addition hash 
 fn addition_proof() {
