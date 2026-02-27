@@ -49,6 +49,4 @@ The goal of this repository is conceptual clarity, not cryptographic security or
 
 `merkle.rs` - A simple Merkle tree implementation to demonstrate how Merkle proofs can be used in zkps.
 
-shoutout to @luisshr for this: https://github.com/luishsr/zk-mini
-
 ---
